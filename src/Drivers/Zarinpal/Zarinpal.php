@@ -136,7 +136,9 @@ class Zarinpal extends Driver
 
         if ($result->Status != 100) {
             $message = $this->translateStatus($result->Status);
-            throw new InvalidPaymentException($message, $result->Status);
+            $InvalidPaymentException = new InvalidPaymentException($message, $result->Status);
+            $InvalidPaymentException->result = $result;
+            throw  $InvalidPaymentException;
         }
 
         return $this->createReceipt($result->RefID);
